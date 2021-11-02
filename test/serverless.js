@@ -19,6 +19,7 @@ class Serverless {
       }
       return this.functions[functionName];
     };
+    this.service.provider = {};
     this.utils = {
       writeFileSync() {},
       readFileSync() {},
@@ -34,6 +35,13 @@ class Serverless {
     this.pluginManager = {
       addPlugin: (plugin) => this.plugins.push(plugin),
     };
+
+    this.configSchemaHandler = {
+      defineProvider: jest.fn(),
+      defineFunctionEvent: jest.fn(),
+    };
+
+    this.processedInput = {};
   }
 
   setProvider(name, provider) {

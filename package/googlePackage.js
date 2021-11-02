@@ -18,6 +18,32 @@ class GooglePackage {
     this.serverless = serverless;
     this.options = options;
     this.provider = this.serverless.getProvider('google');
+    this.serverless.configSchemaHandler.defineFunctionEvent('google', 'http', { type: 'string' });
+    this.serverless.configSchemaHandler.defineFunctionEvent('google', 'event', {
+      type: 'object',
+      properties: {
+        eventType: {
+          type: 'string',
+        },
+        path: {
+          type: 'string',
+        },
+        resource: {
+          type: 'string',
+        },
+        failurePolicy: {
+          type: 'object',
+          properties: {
+            retry: {
+              type: 'object',
+            },
+          },
+          additionalProperties: false,
+        },
+      },
+      required: ['eventType', 'resource'],
+      additionalProperties: false,
+    });
 
     Object.assign(
       this,
